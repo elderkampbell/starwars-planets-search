@@ -1,19 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import { useContext } from 'react';
+import AppContext from '../context/AppContext';
 
-export default function Form() {
-  const [data, setData] = useState([]);
-  console.log(data);
-
-  useEffect(() => {
-    const GetApi = async () => {
-      const URL = 'https://swapi.dev/api/planets';
-      const response = await fetch(URL).then((array) => array.json());
-      const { results } = response;
-      setData(results);
-    };
-    GetApi();
-  }, []);
-
+export default function Table() {
+  const { data, search } = useContext(AppContext);
   return (
     <table>
       <thead>
@@ -34,62 +23,63 @@ export default function Form() {
         </tr>
       </thead>
       <tbody>
-        { data.map((e) => (
-          <tr key={ e.name }>
-            <td>
-              { e.name }
-            </td>
+        { data.filter((e) => e.name.toLowerCase().includes(search.toLowerCase()))
+          .map((e) => (
+            <tr key={ e.name }>
+              <td>
+                { e.name }
+              </td>
 
-            <td>
-              { e.rotation_period }
-            </td>
+              <td>
+                { e.rotation_period }
+              </td>
 
-            <td>
-              { e.orbital_period }
-            </td>
+              <td>
+                { e.orbital_period }
+              </td>
 
-            <td>
-              { e.diameter }
-            </td>
+              <td>
+                { e.diameter }
+              </td>
 
-            <td>
-              { e.climate }
-            </td>
+              <td>
+                { e.climate }
+              </td>
 
-            <td>
-              { e.gravity }
-            </td>
+              <td>
+                { e.gravity }
+              </td>
 
-            <td>
-              { e.terrain }
-            </td>
+              <td>
+                { e.terrain }
+              </td>
 
-            <td>
-              { e.surface_water }
-            </td>
+              <td>
+                { e.surface_water }
+              </td>
 
-            <td>
-              { e.population }
-            </td>
+              <td>
+                { e.population }
+              </td>
 
-            <td>
-              { e.films }
-            </td>
+              <td>
+                { e.films }
+              </td>
 
-            <td>
-              { e.created }
-            </td>
+              <td>
+                { e.created }
+              </td>
 
-            <td>
-              { e.edited }
-            </td>
+              <td>
+                { e.edited }
+              </td>
 
-            <td>
-              { e.url }
-            </td>
+              <td>
+                { e.url }
+              </td>
 
-          </tr>
-        ))}
+            </tr>
+          ))}
       </tbody>
     </table>
   );
