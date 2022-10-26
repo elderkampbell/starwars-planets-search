@@ -54,11 +54,12 @@ function AppProvider({ children }) {
     comparison,
     valuefilter,
     setData,
+    setFilteredData,
     handleSearch,
     handleColumn,
     handleComparison,
     handleValueFilter,
-  }), [data, search, column, comparison, valuefilter]);
+  }), [data, search, column, comparison, valuefilter, filteredData]);
 
   return (
     <AppContext.Provider value={ globalContext }>
