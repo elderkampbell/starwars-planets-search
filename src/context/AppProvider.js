@@ -16,6 +16,7 @@ function AppProvider({ children }) {
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
   const [valuefilter, setValueFilter] = useState(0);
+  const [filteredData, setFilteredData] = useState([]);
 
   const handleSearch = ({ target }) => {
     const { value } = target;
@@ -46,11 +47,13 @@ function AppProvider({ children }) {
 
   const globalContext = useMemo(() => ({
     data,
+    filteredData,
     search,
     columnsArray,
     column,
     comparison,
     valuefilter,
+    setData,
     handleSearch,
     handleColumn,
     handleComparison,

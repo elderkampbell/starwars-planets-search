@@ -9,7 +9,6 @@ function App() {
     <AppProvider>
       <Form />
       <Table />
-      <span>Hello, App!</span>
     </AppProvider>
   );
 }

@@ -1,8 +1,10 @@
 import { useContext } from 'react';
 import AppContext from '../context/AppContext';
 
-export default function Table() {
+export default function Form() {
   const {
+    data,
+    setData,
     handleSearch,
     search,
     columnsArray,
@@ -15,9 +17,19 @@ export default function Table() {
   } = useContext(AppContext);
 
   const filterFunction = () => {
-    console.log(column);
-    console.log(comparison);
-    console.log(valuefilter);
+    const filteredData = data.filter((e) => {
+      switch (comparison) {
+      case 'maior que':
+        return (Number(e[column]) > Number(valuefilter));
+      case 'menor que':
+        return (Number(e[column]) < Number(valuefilter));
+      case 'igual a':
+        return (Number(e[column]) === Number(valuefilter));
+      default:
+        return '';
+      }
+    });
+    setData(filteredData);
   };
 
   return (

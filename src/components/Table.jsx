@@ -4,7 +4,7 @@ import AppContext from '../context/AppContext';
 export default function Table() {
   const { data, search } = useContext(AppContext);
   return (
-    <table>
+    <table data-testid="main-table">
       <thead>
         <tr>
           <th>name</th>
