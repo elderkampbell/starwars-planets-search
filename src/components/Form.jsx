@@ -1,13 +1,22 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import AppContext from '../context/AppContext';
 
 export default function Form() {
+  const columnsArray = [
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ];
+
+  const [array, setArray] = useState(columnsArray);
+
   const {
     data,
     setData,
     handleSearch,
     search,
-    columnsArray,
     column,
     handleColumn,
     comparison,
@@ -29,6 +38,8 @@ export default function Form() {
         return data;
       }
     });
+
+    setArray(array.filter((e) => e !== column));
     setData(filteredData);
   };
 
@@ -46,7 +57,7 @@ export default function Form() {
         value={ column }
         onChange={ handleColumn }
       >
-        { columnsArray.map((e) => <option value={ e } key={ e }>{ e }</option>)}
+        { array.map((e) => <option value={ e } key={ e }>{ e }</option>)}
       </select>
       <select
         data-testid="comparison-filter"

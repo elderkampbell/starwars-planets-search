@@ -2,14 +2,6 @@ import React, { useState, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import AppContext from './AppContext';
 
-const columnsArray = [
-  'population',
-  'orbital_period',
-  'diameter',
-  'rotation_period',
-  'surface_water',
-];
-
 function AppProvider({ children }) {
   const [data, setData] = useState([]);
   const [search, setSearch] = useState('');
@@ -49,7 +41,6 @@ function AppProvider({ children }) {
     data,
     filteredData,
     search,
-    columnsArray,
     column,
     comparison,
     valuefilter,
