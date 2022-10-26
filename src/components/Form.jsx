@@ -26,7 +26,7 @@ export default function Form() {
       case 'igual a':
         return (Number(e[column]) === Number(valuefilter));
       default:
-        return '';
+        return data;
       }
     });
     setData(filteredData);
@@ -65,7 +65,7 @@ export default function Form() {
       />
       <input
         type="button"
-        value="Buscar"
+        value="Filtrar"
         data-testid="button-filter"
         onClick={ filterFunction }
       />

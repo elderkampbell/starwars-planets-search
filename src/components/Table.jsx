@@ -26,7 +26,7 @@ export default function Table() {
         { data.filter((e) => e.name.toLowerCase().includes(search.toLowerCase()))
           .map((e) => (
             <tr key={ e.name }>
-              <td>
+              <td data-testid="planet-name">
                 { e.name }
               </td>
 
