@@ -2,7 +2,9 @@ import { useContext } from 'react';
 import AppContext from '../context/AppContext';
 
 export default function Table() {
-  const { data, search } = useContext(AppContext);
+  const {
+    // data,
+    search, screenFilteredData } = useContext(AppContext);
   return (
     <table data-testid="main-table">
       <thead>
@@ -23,7 +25,9 @@ export default function Table() {
         </tr>
       </thead>
       <tbody>
-        { data.filter((e) => e.name.toLowerCase().includes(search.toLowerCase()))
+        { screenFilteredData.filter(
+          (e) => e.name.toLowerCase().includes(search.toLowerCase()),
+        )
           .map((e) => (
             <tr key={ e.name }>
               <td data-testid="planet-name">

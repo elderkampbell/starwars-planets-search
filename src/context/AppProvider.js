@@ -8,13 +8,16 @@ function AppProvider({ children }) {
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
   const [valuefilter, setValueFilter] = useState(0);
+  const [filtersData, setFiltersData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
+  const [screenFilteredData, setScreenFilteredData] = useState([]);
 
   const handleSearch = ({ target }) => {
     const { value } = target;
     setSearch(value);
   };
   const handleColumn = ({ target }) => {
+    console.log('FOi');
     const { value } = target;
     setColumn(value);
   };
@@ -44,13 +47,25 @@ function AppProvider({ children }) {
     column,
     comparison,
     valuefilter,
+    filtersData,
+    screenFilteredData,
     setData,
+    setColumn,
     setFilteredData,
     handleSearch,
     handleColumn,
     handleComparison,
     handleValueFilter,
-  }), [data, search, column, comparison, valuefilter, filteredData]);
+    setFiltersData,
+    setScreenFilteredData,
+  }), [data,
+    search,
+    column,
+    comparison,
+    valuefilter,
+    filteredData,
+    filtersData,
+    screenFilteredData]);
 
   return (
     <AppContext.Provider value={ globalContext }>

@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import AppContext from '../context/AppContext';
 
 export default function Form() {
@@ -14,33 +14,60 @@ export default function Form() {
 
   const {
     data,
-    setData,
+    // setData,
     handleSearch,
     search,
     column,
+    setColumn,
     handleColumn,
     comparison,
     handleComparison,
     valuefilter,
     handleValueFilter,
+    filtersData,
+    setFiltersData,
+    setScreenFilteredData,
   } = useContext(AppContext);
 
   const filterFunction = () => {
-    const filteredData = data.filter((e) => {
-      switch (comparison) {
-      case 'maior que':
-        return (Number(e[column]) > Number(valuefilter));
-      case 'menor que':
-        return (Number(e[column]) < Number(valuefilter));
-      case 'igual a':
-        return (Number(e[column]) === Number(valuefilter));
-      default:
-        return data;
-      }
-    });
-
+    const filters = {
+      column,
+      comparison,
+      valuefilter,
+    };
+    setFiltersData((prev) => [...prev, filters]);
     setArray(array.filter((e) => e !== column));
-    setData(filteredData);
+  };
+
+  useEffect(() => {
+    let originalData = data;
+    setColumn(array[0]);
+    filtersData.forEach((f) => {
+      const filteredData = originalData.filter((e) => {
+        switch (f.comparison) {
+        case 'maior que':
+          return (Number(e[f.column]) > Number(f.valuefilter));
+        case 'menor que':
+          return (Number(e[f.column]) < Number(f.valuefilter));
+        case 'igual a':
+          return (Number(e[f.column]) === Number(f.valuefilter));
+        default:
+          return data;
+        }
+      });
+      originalData = filteredData;
+    });
+    setScreenFilteredData(originalData);
+  }, [filtersData, data, setScreenFilteredData, setColumn, array]);
+
+  const clearAllFilters = () => {
+    setFiltersData([]);
+    setArray(columnsArray);
+  };
+
+  const clearFilter = (index, columnString) => {
+    setFiltersData(filtersData.filter((_, i) => index !== i));
+    setArray((prev) => [...prev, columnString]);
   };
 
   return (
@@ -80,6 +107,27 @@ export default function Form() {
         data-testid="button-filter"
         onClick={ filterFunction }
       />
+      <button
+        type="button"
+        data-testid="button-remove-filters"
+        onClick={ clearAllFilters }
+      >
+        Limpar Filtros
+      </button>
+
+      {filtersData.map(
+        (e, i) => (
+          <div key={ e.column }>
+            <button
+              type="button"
+              data-testid="filter"
+              onClick={ () => clearFilter(i, e.column) }
+            >
+              X
+            </button>
+            { `${e.column} ${e.comparison} ${e.valuefilter}` }
+          </div>),
+      )}
     </div>
   );
 }
